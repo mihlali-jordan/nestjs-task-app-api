@@ -6,6 +6,7 @@ import { TasksController } from './tasks.controller'
 import { TasksService } from './tasks.service'
 
 // for submodules we use forFeature
+// when we import configModule into a given module, we expose a config service which is injectable into our classes
 @Module({
   imports: [TypeOrmModule.forFeature([TaskRepository]), AuthModule],
   controllers: [TasksController],
