@@ -1,11 +1,13 @@
 import { Module } from '@nestjs/common'
 import { TypeOrmModule } from '@nestjs/typeorm'
+import { AuthModule } from 'src/auth/auth.module'
 import { TaskRepository } from './task.respository'
 import { TasksController } from './tasks.controller'
 import { TasksService } from './tasks.service'
 
+// for submodules we use forFeature
 @Module({
-  imports: [TypeOrmModule.forFeature([TaskRepository])],
+  imports: [TypeOrmModule.forFeature([TaskRepository]), AuthModule],
   controllers: [TasksController],
   providers: [TasksService],
 })
