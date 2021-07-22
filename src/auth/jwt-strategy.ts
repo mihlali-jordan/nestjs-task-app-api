@@ -1,6 +1,7 @@
 // Strategy is just an injectable class
 
 import { Injectable, UnauthorizedException } from '@nestjs/common'
+import { ConfigService } from '@nestjs/config'
 import { PassportStrategy } from '@nestjs/passport'
 import { InjectRepository } from '@nestjs/typeorm'
 import { ExtractJwt, Strategy } from 'passport-jwt'
@@ -14,10 +15,11 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
   constructor(
     @InjectRepository(UsersRepository)
     private usersRepository: UsersRepository,
+    private configService: ConfigService,
   ) {
     // when derived classes have a constructor, they need to call super to initialise the constructor of the parent class
     super({
-      secretOrKey: 'mysecret',
+      secretOrKey: configService.get('JWT_SECRET'),
       jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
     })
   }
